@@ -1,0 +1,51 @@
+MiniTopologicalSpaces Architecture
+==================================
+
+Package: mini-topological-spaces
+Library: MiniTopologicalSpaces
+Namespace: MiniTopologicalSpaces
+
+Dependencies:
+  - mini-object-kernel (Object typeclass)
+
+Core:
+  Basic.lean   -- TopologicalSpace, OpenSet, ClosedSet, Neighborhood,
+                  Interior, Closure, Boundary, LimitPoint, IsolatedPoint,
+                  Dense, Separable, discrete/indiscrete topologies
+  Objects.lean -- Object instances, theory registration
+  Laws.lean    -- Open/closed duality, Kuratowski closure axioms,
+                  interior/closure relationship
+
+Morphisms:
+  Hom.lean   -- ContinuousMap, OpenMap, ClosedMap, QuotientMap, Embedding
+  Iso.lean   -- Homeomorphism, Homeomorphic, topological equivalence
+  Equiv.lean -- HomotopyEquivalence, WeakHomotopyEquivalence
+
+Constructions:
+  Products.lean    -- Product topology (binary), box topology, projections
+  Quotients.lean   -- Quotient topology, identification space, group action quotient
+  Subobjects.lean  -- Subspace topology, Subbasis, Basis generation
+  Universal.lean   -- Universal properties in category Top
+
+Properties:
+  Invariants.lean         -- FirstCountable, SecondCountable, Lindelof
+  Preservation.lean       -- Compactness/connectedness under continuous maps
+  ClassificationData.lean -- Finite topology classification, lattice
+
+Theorems:
+  Basic.lean              -- Tychonoff (binary), unique limits in Hausdorff
+  UniversalProperties.lean -- Universal property proofs
+  Classification.lean      -- Classification of 1-manifolds
+  Main.lean               -- Alexander subbase, Tychonoff (general), 14-set
+
+Examples:
+  Standard.lean        -- Euclidean, discrete, indiscrete, cofinite, cocountable, Sierpinski
+  Counterexamples.lean -- Sorgenfrey line, uncountable product, Hausdorff quotient
+
+Bridges:
+  ToAlgebra.lean      -- Topological groups, rings, vector spaces
+  ToTopology.lean     -- Metric spaces, metrizability, Urysohn metrization
+  ToGeometry.lean     -- Manifolds, charts, atlases
+  ToComputation.lean  -- Finite topological spaces, digital topology
+
+Total .lean modules: 23

@@ -1,0 +1,28 @@
+/-
+MiniSeparationAxioms — Separation axioms package
+Aggregates all submodules.
+-/
+
+import MiniSeparationAxioms.Core.Basic
+import MiniSeparationAxioms.Core.Objects
+import MiniSeparationAxioms.Core.Laws
+import MiniSeparationAxioms.Morphisms.Hom
+import MiniSeparationAxioms.Morphisms.Iso
+import MiniSeparationAxioms.Morphisms.Equiv
+import MiniSeparationAxioms.Constructions.Products
+import MiniSeparationAxioms.Constructions.Universal
+import MiniSeparationAxioms.Constructions.Subobjects
+import MiniSeparationAxioms.Constructions.Quotients
+import MiniSeparationAxioms.Properties.Invariants
+import MiniSeparationAxioms.Properties.Preservation
+import MiniSeparationAxioms.Properties.ClassificationData
+import MiniSeparationAxioms.Theorems.Basic
+import MiniSeparationAxioms.Theorems.UniversalProperties
+import MiniSeparationAxioms.Theorems.Classification
+import MiniSeparationAxioms.Theorems.Main
+import MiniSeparationAxioms.Examples.Standard
+import MiniSeparationAxioms.Examples.Counterexamples
+import MiniSeparationAxioms.Bridges.ToAlgebra
+import MiniSeparationAxioms.Bridges.ToTopology
+import MiniSeparationAxioms.Bridges.ToGeometry
+import MiniSeparationAxioms.Bridges.ToComputation

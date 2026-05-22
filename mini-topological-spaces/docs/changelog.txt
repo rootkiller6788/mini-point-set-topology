@@ -1,0 +1,26 @@
+MiniTopologicalSpaces Changelog
+==================================
+
+v0.1.0 (2026-05-21)
+  - Initial standalone mini-package with full skeleton
+  - Core: TopologicalSpace via open sets, OpenSet, ClosedSet, Neighborhood,
+          Interior, Closure, Boundary, LimitPoint, IsolatedPoint, Dense,
+          Separable, discrete/indiscrete topologies, Object instances
+  - Laws: Open/closed duality, Kuratowski closure axioms (partial), interior/closure
+  - Morphisms: ContinuousMap, OpenMap, ClosedMap, QuotientMap, Embedding,
+               Homeomorphism, HomotopyEquivalence, WeakHomotopyEquivalence
+  - Constructions: Product topology, quotient topology, subspace topology,
+                   Subbasis/Basis, universal properties
+  - Properties: FirstCountable, SecondCountable, Lindelof, Compact, Connected,
+                preservation theorems, finite topology classification
+  - Theorems: Tychonoff (binary + general), unique limits in Hausdorff,
+              classification of 1-manifolds, Alexander subbase, 14-set theorem
+              (most proofs marked with sorry)
+  - Examples: Euclidean, discrete, indiscrete, cofinite, cocountable,
+              Sierpinski space, Sorgenfrey line, counterexamples
+  - Bridges: Topological groups/rings/vector spaces, metric spaces,
+             metrizability, topological manifolds, charts/atlases,
+             finite topological spaces, digital topology
+  - Tests: Smoke, Examples, Regression
+  - Benchmarks: CoreCoverage, Princeton, CambridgePartIII, Harvard, MIT, OxfordPartC
+  - Computation: notebooks, python, sage stubs, run_compute, topology_data

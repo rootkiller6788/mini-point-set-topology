@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "packagesDir": "./.lake/packages",
+  "packages": [
+    {
+      "name": "mini-object-kernel",
+      "url": "../../0. mini-math-kernel/mini-object-kernel",
+      "type": "path"
+    },
+    {
+      "name": "mini-topological-spaces",
+      "url": "../mini-topological-spaces",
+      "type": "path"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+MiniTopologicalSpaces TODO
+===========================
+
+High Priority:
+[ ] Prove Kuratowski closure axioms (Core/Laws.lean)
+[ ] Complete cofinite topology definition (Examples/Standard.lean)
+[ ] Complete subspace topology proofs (Constructions/Subobjects.lean)
+[ ] Prove Tychonoff theorem (binary + general) (Theorems/Basic.lean, Theorems/Main.lean)
+
+Medium Priority:
+[ ] Prove universal property theorems (Theorems/UniversalProperties.lean)
+[ ] Prove classification of 1-manifolds (Theorems/Classification.lean)
+[ ] Prove Kuratowski 14-set theorem (Theorems/Main.lean)
+[ ] Fill in property implications (second-countable => first-countable etc.)
+[ ] Complete preservation theorems (Properties/Preservation.lean)
+
+Low Priority:
+[ ] Bridge theorem proofs (Bridges/To*.lean)
+[ ] Counterexample proofs (Examples/Counterexamples.lean)
+[ ] Urysohn lemma and metrization theorem proofs
+[ ] Alexander subbase theorem proof
+[ ] Finite topology enumeration for n=5,6
+[ ] Homotopy group infrastructure

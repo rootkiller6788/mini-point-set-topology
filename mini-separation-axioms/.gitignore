@@ -1,0 +1,21 @@
+# Lean 4
+/lakefile.olean
+/lake-packages/
+/.lake/
+/build/
+/lake-manifest.json
+
+# Compiled files
+*.olean
+*.ilean
+*.trace
+
+# Python
+__pycache__/
+*.pyc
+.env/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
