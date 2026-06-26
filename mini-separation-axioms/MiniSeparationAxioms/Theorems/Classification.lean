@@ -187,7 +187,6 @@ theorem sequential_is_countably_tight : True := by trivial
 
 /-- The product of two countably tight spaces need not be countably tight
 (Malykhin's example). -/
-theorem malykhin_counterexample : True := by trivial
 
 /-- The product of a compact space and a paracompact space is paracompact
 (Dieudonné). -/

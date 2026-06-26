@@ -254,31 +254,22 @@ Each inclusion is strict (there are counterexamples). -/
 theorem separation_hierarchy_strict : True := by trivial
 
 /-- The Fort space on an infinite set is T2 but not T3. -/
-theorem fort_space_example : True := by trivial
 
 /-- The cofinite topology on an infinite set is T1 but not T2. -/
-theorem cofinite_example : True := by trivial
 
 /-- The Sierpinski space (2 points, 3 opens) is T0 but not T1. -/
-theorem sierpinski_example : True := by trivial
 
 /-- An indiscrete space with 2+ points is not T0. -/
-theorem indiscrete_example : True := by trivial
 
 /-- The Moore plane (Niemytzki plane) is T3.5 but not T4. -/
-theorem moore_plane_example : True := by trivial
 
 /-- The Tychonoff plank is T3.5 but not T4. -/
-theorem tychonoff_plank_example : True := by trivial
 
 /-- The Sorgenfrey plane is T3.5 but not T4 (product of T4 not T4). -/
-theorem sorgenfrey_plane_example : True := by trivial
 
 /-- The ordinal space ω₁ is T4 but not T5. -/
-theorem omega1_example : True := by trivial
 
 /-- The ordinal space [0, ω₁] (compact Hausdorff) is T4 but not T5. -/
-theorem compact_omega1_example : True := by trivial
 
 /-- T0 spaces with finite topologies correspond to finite posets. -/
 theorem finite_t0_poset_correspondence : True := by trivial
