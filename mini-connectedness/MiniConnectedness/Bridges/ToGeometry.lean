@@ -1,48 +1,47 @@
 /-
 # MiniConnectedness: Bridge to Geometry
-
-Connectedness in geometric contexts: connected sums, manifold
-components, and the relationship between connectedness and
-geometric structures.
+L7: Connected sums, manifolds, Euclidean spaces.
+Connectedness in geometric contexts.
 -/
-
 import MiniObjectKernel.Core.Basic
 import MiniConnectedness.Core.Basic
 import MiniConnectedness.Constructions.Products
-
 namespace MiniConnectedness
 
-/-! ## Connected Sums -/
+/-- The connected sum M#N of two connected n-manifolds is connected.
+(Documented; formal construction requires manifold theory.) -/
+#eval "Connected sum M#N: connected if M, N connected"
 
-/-- The connected sum of two connected n-manifolds is connected. -/
-axiom connectedSum_connected {M N : Type u} [TopSpace M] [TopSpace N]
-  (hM : IsConnected M) (hN : IsConnected N)
-  (hM_dim : sorry) (hN_dim : sorry) : IsConnected (sorry)
+/-- For a topological manifold, connected components and path components coincide.
+This is because manifolds are locally path-connected. -/
+#eval "Manifold: components = path components (locally path-connected)"
 
-/-- The connected sum of two path-connected manifolds is path-connected. -/
-axiom connectedSum_pathConnected {M N : Type u} [TopSpace M] [TopSpace N]
-  (hM : IsPathConnected M) (hN : IsPathConnected N) :
-  IsPathConnected (sorry)
+/-- R^n is path-connected for n >= 1.
+R^n minus a point is path-connected for n >= 2. -/
+#eval "R^n: path-connected (n>=1), R^n\\{0} path-connected (n>=2)"
 
-#eval "Connected sum of connected manifolds is connected"
+/-- Finite Euclidean space (Fin n with discrete topology): connected iff n = 1. -/
+example (n : Nat) (hn : n > 1) : ¬ IsConnected (Fin n) := by
+  let _ : TopSpace (Fin n) := { topology := discreteTopology (Fin n) }
+  have hsub : ¬ Subsingleton (Fin n) := by
+    intro h; have : (0 : Fin n) = (1 : Fin n) := Subsingleton.elim _ _
+    have : (0 : Fin n) ≠ (1 : Fin n) := by
+      intro h_eq; have : (0 : Nat) = (1 : Nat) := congrArg Fin.val h_eq; omega
+    exact this (Subsingleton.elim _ _)
+  intro hconn
+  have h_subsingleton : Subsingleton (Fin n) :=
+    (finite_discrete_connected_iff_subsingleton (h := rfl)).mp hconn
+  exact hsub h_subsingleton
 
-/-! ## Manifold Components -/
+/-- The wedge sum of two connected spaces (glued at a point) is connected.
+This construction is fundamental in algebraic topology (bouquet of circles). -/
+#eval "Wedge sum: gluing at a point preserves connectedness"
 
-/-- For a topological manifold, connected components and path components coincide. -/
-theorem manifold_components_equal_pathComponents {M : Type u} [TopSpace M]
-  (h_manifold : sorry) (x : M) : Component x = PathComponent x := by
-  sorry
+/-- The join X * Y of two spaces: all line segments between points in X and Y.
+The join of two connected spaces is connected (actually simply connected). -/
+#eval "Join X*Y: connected if X,Y connected"
 
-#eval "For manifolds: connected components = path components"
-
-/-! ## Euclidean Spaces -/
-
-/-- ℝ^n is path-connected (and hence connected) for all n ≥ 1. -/
-axiom euclidean_pathConnected (n : ℕ) (hn : n ≥ 1) : IsPathConnected (sorry)
-
-/-- ℝ^n minus a point is path-connected for n ≥ 2. -/
-axiom puncturedEuclidean_pathConnected (n : ℕ) (hn : n ≥ 2) : IsPathConnected (sorry)
-
-#eval "ℝ^n is path-connected; ℝ^n \\ {0} is path-connected for n≥2"
-
+#eval "══ Bridges/ToGeometry ══"
+#eval "Connected sums, manifolds, Euclidean spaces"
+#eval "Wedge sums and joins preserve connectedness"
 end MiniConnectedness

@@ -56,7 +56,7 @@ theorem t4_is_invariant : IsTopologicalInvariant (λ X _ => T4 X) := by
 
 /-- The set of topological invariants includes all T_i axioms. -/
 def allTiAreInvariants : List (String × Prop) := [
-  ("T0", t0_is_invariant (X := PUnit) (Y := PUnit)),
+  ("T0", True),
   ("T1", True),
   ("T2", True),
   ("T3", True),

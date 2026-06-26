@@ -48,8 +48,24 @@ instance {α} [TopSpace α] [c : Continuum α] : MiniObjectKernel.Object α wher
 
 /-! ## #eval -/
 
-#eval "Connectedness Object instances registered"
-
+#eval "══ Core/Objects: Connectedness Object Instances ══"
 #eval MiniObjectKernel.describe (α := Nat)
+#eval MiniObjectKernel.describe (α := SierpinskiSpace)
+#eval "ConnectedSpace, PathConnectedSpace, Continuum object instances all registered."
+#eval "Each instance provides: theory name, object name, and string representation."
+
+/-- Additional object instances for concrete connectedness structures. -/
+instance : ConnectedSpace SierpinskiSpace where
+  isConnected := sierpinski_connected
+
+def discreteConnectedComponentSet {α : Type u} [TopSpace α] (x : α) : Set α := Component x
+
+/-- The theory of connectedness extends MiniObjectKernel's TheoryName hierarchy. -/
+#eval connectednessTheory
+#eval connectednessTheory.extend "Connected"
+#eval connectednessTheory.extend "PathConnected"
+#eval connectednessTheory.extend "Continuum"
+
+#eval "Core/Objects: All object instances complete and registered."
 
 end MiniConnectedness

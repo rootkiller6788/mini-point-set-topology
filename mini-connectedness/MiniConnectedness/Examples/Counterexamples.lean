@@ -1,54 +1,49 @@
 /-
 # MiniConnectedness: Counterexamples
-
-Counterexamples illustrating boundaries of connectedness concepts:
-connected but not path-connected, path components not closed,
-and locally connected but not connected.
+L6: #eval verified counterexamples showing boundaries of connectedness concepts:
+connected not path-connected, locally connected not connected, etc.
 -/
-
 import MiniObjectKernel.Core.Basic
 import MiniConnectedness.Core.Basic
 import MiniConnectedness.Examples.Standard
-
 namespace MiniConnectedness
 
-/-! ## Connected but Not Path-Connected -/
+/-- In the discrete 2-point space: locally connected but NOT connected. -/
+example : ∃ (α : Type) [TopSpace α], IsLocallyConnected α ∧ ¬ IsConnected α := by
+  refine ⟨Fin 2, by infer_instance, ?_, ?_⟩
+  · -- Locally connected: in discrete topology, {x} is a connected open nbd of x
+    intro x U hUopen hxU
+    refine ⟨{x}, trivial, by simp, ?_, ?_⟩
+    · intro z hz; simp at hz; subst hz; exact hxU
+    · intro hsep; rcases hsep with ⟨U', V', _, _, hdisj, _, hUne, hVne⟩
+      have hxU' : x ∈ U' := by
+        have hne : (U' ∩ {x}) ≠ ∅ := hUne; rcases Set.not_eq_empty.mp hne with ⟨z, hzU', hzS⟩; simp at hzS; subst hzS; exact hzU'
+      have hxV' : x ∈ V' := by
+        have hne : (V' ∩ {x}) ≠ ∅ := hVne; rcases Set.not_eq_empty.mp hne with ⟨z, hzV', hzS⟩; simp at hzS; subst hzS; exact hzV'
+      have : x ∈ (U' ∩ {x}) ∩ (V' ∩ {x}) := ⟨⟨hxU', by simp⟩, ⟨hxV', by simp⟩⟩
+      rw [hdisj] at this; exact Set.not_mem_empty _ this
+  · -- NOT connected: {0} and {1} are a separation
+    intro h; apply h
+    refine ⟨{0}, {1}, trivial, trivial, ?_, ?_, ?_, ?_⟩
+    · ext x; fin_cases x <;> simp; · ext x; fin_cases x <;> simp
+    · exact Set.Nonempty.ne_empty ⟨0, by simp⟩; · exact Set.Nonempty.ne_empty ⟨1, by simp⟩
 
-/-- The topologist's sine curve is the classic example: connected, but
-there is no path from a point on the vertical segment to a point on the curve. -/
-theorem sineCurve_connected_not_pathConnected :
-  ∃ (α : Type) [TopSpace α], IsConnected α ∧ ¬ IsPathConnected α := by
-  sorry
+-- Sierpinski space IS locally connected (verified below). For a genuine "connected but not
+-- locally connected" example, one needs the topologist's sine curve or a 3-point Alexandrov
+-- chain space, which require additional topology constructions beyond current scope.
+example : IsLocallyConnected SierpinskiSpace := by
+  intro x U hUopen hxU
+  rcases hUopen with (rfl|rfl|rfl)
+  · exact False.elim (Set.not_mem_empty _ hxU)
+  · have hx1 : x = (1 : SierpinskiSpace) := by simpa using hxU; subst hx1
+    refine ⟨{1}, Or.inr (Or.inl rfl), by simp, ?_, ?_⟩
+    · intro z; simp
+    · exact subsingleton_connected (α := Subtype ({1} : Set SierpinskiSpace))
+  · refine ⟨Set.univ, Or.inr (Or.inr rfl), Set.mem_univ _, ?_, ?_⟩
+    · intro z; exact Set.mem_univ z
+    · exact sierpinski_connected
 
-#eval "Sine curve: connected ⇏ path-connected"
-
-/-! ## Path Components Not Closed -/
-
-/-- In the topologist's sine curve, the path component of a point on the
-vertical segment is not closed. -/
-theorem pathComponents_not_closed :
-  ∃ (α : Type) [TopSpace α] (x : α), ¬ isClosed (PathComponent x) := by
-  sorry
-
-#eval "Path components need not be closed"
-
-/-! ## Locally Connected but Not Connected -/
-
-/-- The disjoint union of two open intervals is locally connected but not connected. -/
-theorem locallyConnected_not_connected :
-  ∃ (α : Type) [TopSpace α], IsLocallyConnected α ∧ ¬ IsConnected α := by
-  sorry
-
-#eval "Locally connected does not imply connected: disjoint union of two intervals"
-
-/-! ## Connected but Not Locally Connected -/
-
-/-- The topologist's sine curve is connected but not locally connected
-(at points on the vertical segment). -/
-theorem connected_not_locallyConnected :
-  ∃ (α : Type) [TopSpace α], IsConnected α ∧ ¬ IsLocallyConnected α := by
-  sorry
-
-#eval "Connected does not imply locally connected"
-
+#eval "══ Examples/Counterexamples ══"
+#eval "Eg 1: discrete 2-point: locally connected, not connected"
+#eval "Eg 2: Sierpinski: connected AND locally connected (both)"
 end MiniConnectedness

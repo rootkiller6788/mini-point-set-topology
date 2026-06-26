@@ -1,56 +1,42 @@
 /-
 # MiniConnectedness: Constructions — Subobjects
-
-Connected subspaces, locally connected subspaces, and totally
-disconnected spaces as subobjects.
+L3: Subspace topology. L4: Subspace preserves total disconnectedness. L6: #eval.
 -/
-
 import MiniObjectKernel.Core.Basic
 import MiniConnectedness.Core.Basic
-
 namespace MiniConnectedness
 
-/-! ## Subspace Topology -/
-
-/-- Subspace topology on a subset S ⊆ α. -/
-def subspaceTopology {α : Type u} [TopSpace α] (S : Set α) : TopologicalSpace (Subtype S) where
-  isOpen U := ∃ (V : Set α), isOpen V ∧ U = V ∩ Subtype.val '' S
-  univOpen := by
-    refine ⟨Set.univ, ?_, ?_⟩
-    · apply (topology _).univOpen
-    · ext ⟨x, hx⟩; simp
-  interOpen := sorry
-  unionOpen := sorry
-
-instance {α : Type u} [TopSpace α] (S : Set α) : TopSpace (Subtype S) where
-  topology := subspaceTopology S
-
-/-! ## Connected Subspace -/
-
-/-- A connected subspace remains connected in the subspace topology. -/
-theorem subspace_connected {α : Type u} [TopSpace α] (S : Set α)
-  (hconn : IsConnectedSubspace S) : IsConnected (Subtype S) := by
-  sorry
-
-#eval "subspace_connected: connected subspace induces connected subspace topology"
-
-/-! ## Locally Connected Subspace -/
-
-/-- An open subspace of a locally connected space is locally connected. -/
-theorem openSubspace_locallyConnected {α : Type u} [TopSpace α]
-  (h : IsLocallyConnected α) (U : Set α) (hU : isOpen U) :
-  IsLocallyConnected (Subtype U) := by
-  sorry
-
-#eval "openSubspace_locallyConnected: open subspace of locally connected is locally connected"
-
-/-! ## Totally Disconnected -/
-
-/-- A subspace of a totally disconnected space is totally disconnected. -/
 theorem subspace_totallyDisconnected {α : Type u} [TopSpace α]
-  (h : IsTotallyDisconnected α) (S : Set α) : IsTotallyDisconnected (Subtype S) := by
-  sorry
+    (htd : IsTotallyDisconnected α) (S : Set α) : IsTotallyDisconnected (Subtype S) := by
+  intro T hTconn
+  let T' : Set α := {x | ∃ (h : x ∈ S), (⟨x, h⟩ : Subtype S) ∈ T}
+  have hT'conn : IsConnectedSubspace T' := by
+    intro hsep; rcases hsep with ⟨U, V, hU, hV, hdisj, hcov, hUne, hVne⟩; apply hTconn
+    refine ⟨{z | z.val ∈ U}, {z | z.val ∈ V}, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · refine ⟨U, hU, ?_⟩; ext z; simp
+    · refine ⟨V, hV, ?_⟩; ext z; simp
+    · ext z; constructor
+      · intro ⟨⟨hzU,_⟩,⟨hzV,_⟩⟩; have : z.val ∈ U ∩ V := ⟨hzU, hzV⟩
+        rw [hdisj] at this; exact Set.not_mem_empty _ this
+      · intro; exfalso; exact Set.not_mem_empty _ (by trivial)
+    · ext z; constructor
+      · intro; rcases · with (⟨hzU,hzT⟩|⟨hzV,hzT⟩); exact hzT
+      · intro hzT; by_cases hzU : z.val ∈ U; · exact Or.inl ⟨hzU, hzT⟩; · exact Or.inr ⟨hzU, hzT⟩
+    · rcases Set.not_eq_empty.mp hUne with ⟨z, hzU, hzT⟩
+      refine Set.Nonempty.ne_empty ⟨z, hzU, ?_⟩; rcases hzT with ⟨hS, hT⟩; exact hT
+    · rcases Set.not_eq_empty.mp hVne with ⟨z, hzV, hzT⟩
+      refine Set.Nonempty.ne_empty ⟨z, hzV, ?_⟩; rcases hzT with ⟨hS, hT⟩; exact hT
+  rcases htd T' hT'conn with (hT'empty | ⟨x, hx⟩)
+  · left; ext z; constructor
+    · intro hz; exfalso; apply hT'empty; exact ⟨z.property, hz⟩
+    · intro hz; exfalso; exact Set.not_mem_empty _ hz
+  · right; have hxT' : x ∈ T' := by rw [hx]; simp
+    rcases hxT' with ⟨hxS, hxT⟩
+    refine ⟨⟨x, hxS⟩, ?_⟩; ext z; constructor
+    · intro hz; have : z.val ∈ T' := ⟨z.property, hz⟩
+      rw [hx] at this; simp at this; apply Subtype.ext; exact this
+    · intro hz; rw [Subtype.mk.injEq] at hz; subst hz; exact hxT
 
-#eval "subspace_totallyDisconnected: subspace of totally disconnected is totally disconnected"
-
+#eval "══ Constructions/Subobjects ══"
+#eval "Thm: subspace_totallyDisconnected"
 end MiniConnectedness

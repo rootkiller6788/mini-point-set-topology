@@ -17,26 +17,8 @@ C*-algebras, F-spaces, moduli spaces, and computational ultrafilter methods.
 - `Bridges`      — C*-algebras, corona, F-spaces, moduli spaces, ultrafilter computation
 -/
 
-import MiniStoneCechCompactification.Core.Basic
-import MiniStoneCechCompactification.Core.Laws
-import MiniStoneCechCompactification.Core.Objects
-import MiniStoneCechCompactification.Morphisms.Hom
-import MiniStoneCechCompactification.Morphisms.Iso
-import MiniStoneCechCompactification.Morphisms.Equiv
-import MiniStoneCechCompactification.Constructions.Products
-import MiniStoneCechCompactification.Constructions.Quotients
-import MiniStoneCechCompactification.Constructions.Subobjects
-import MiniStoneCechCompactification.Constructions.Universal
-import MiniStoneCechCompactification.Properties.Invariants
-import MiniStoneCechCompactification.Properties.Preservation
-import MiniStoneCechCompactification.Properties.ClassificationData
-import MiniStoneCechCompactification.Theorems.Basic
-import MiniStoneCechCompactification.Theorems.Classification
-import MiniStoneCechCompactification.Theorems.Main
-import MiniStoneCechCompactification.Theorems.UniversalProperties
-import MiniStoneCechCompactification.Examples.Standard
-import MiniStoneCechCompactification.Examples.Counterexamples
-import MiniStoneCechCompactification.Bridges.ToAlgebra
-import MiniStoneCechCompactification.Bridges.ToTopology
-import MiniStoneCechCompactification.Bridges.ToGeometry
-import MiniStoneCechCompactification.Bridges.ToComputation
+import MiniStoneCechCompactification.Topology.Basic
+import MiniStoneCechCompactification.Definitions
+import MiniStoneCechCompactification.Theorems
+import MiniStoneCechCompactification.Examples
+import MiniStoneCechCompactification.Bridges

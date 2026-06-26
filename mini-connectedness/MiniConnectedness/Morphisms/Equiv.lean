@@ -1,50 +1,59 @@
 /-
-# MiniConnectedness: Equivalences (Connectedness Invariants)
-
-Connectedness invariants preserved under homeomorphism, and the
-cut-point ordering on topological spaces.
+# MiniConnectedness: Equivalences — Connectedness Invariants
+L2/L4/L5/L6: Topological invariants preserved under homeomorphism.
 -/
-
 import MiniObjectKernel.Core.Basic
 import MiniConnectedness.Core.Basic
+import MiniConnectedness.Core.Laws
 import MiniConnectedness.Morphisms.Iso
-
 namespace MiniConnectedness
 
-/-! ## Connectedness Invariants -/
+theorem connectedness_homeo {α β : Type u} [TopSpace α] [TopSpace β]
+    (h : Homeomorphism α β) : IsConnected α ↔ IsConnected β := by
+  constructor
+  · exact homeomorphism_preserves_connectedness h
+  · exact homeomorphism_preserves_connectedness_symm h
 
-/-- The number of connected components is a topological invariant. -/
-theorem componentCount_invariant {α β : Type u} [TopSpace α] [TopSpace β]
-  (h : Homeomorphism α β) : sorry := by
-  sorry
+theorem pathConnected_homeo {α β : Type u} [TopSpace α] [TopSpace β]
+    (h : Homeomorphism α β) (hpath : IsPathConnected α) : IsPathConnected β := by
+  intro x y; rcases hpath (h.invFun x) (h.invFun y) with ⟨p⟩
+  refine ⟨{ map := h.toFun ∘ p.map
+    start := by simp [p.start, h.leftInv]
+    final := by simp [p.final, h.leftInv]
+    continuity := continuous_comp p.continuity h.continuous_toFun }⟩
 
-/-- The number of path components is a topological invariant. -/
-theorem pathComponentCount_invariant {α β : Type u} [TopSpace α] [TopSpace β]
-  (h : Homeomorphism α β) : sorry := by
-  sorry
+theorem totallyDisconnected_homeo {α β : Type u} [TopSpace α] [TopSpace β]
+    (h : Homeomorphism α β) (htd : IsTotallyDisconnected α) : IsTotallyDisconnected β := by
+  intro S hSconn
+  rcases htd (h.invFun '' S) (by
+    intro hsep; rcases hsep with ⟨U, V, hU, hV, hdisj, hcov, hUne, hVne⟩
+    apply hSconn
+    refine ⟨h.toFun⁻¹' U, h.toFun⁻¹' V, h.continuous_toFun U hU, h.continuous_toFun V hV, ?_, ?_, ?_, ?_⟩
+    · ext z; constructor; · intro ⟨⟨hzU,_⟩,⟨hzV,_⟩⟩; have : h.toFun z ∈ U ∩ V := ⟨hzU, hzV⟩
+        rw [hdisj] at this; exact Set.not_mem_empty _ this
+      · intro; exfalso; exact Set.not_mem_empty _ (by trivial)
+    · ext z; constructor; · intro; rcases · with (⟨hzU,hzS⟩|⟨hzV,hzS⟩); exact hzS
+      · intro hzS; by_cases hzU : h.toFun z ∈ U; · exact Or.inl ⟨hzU, hzS⟩; · exact Or.inr ⟨hzU, hzS⟩
+    · rcases Set.not_eq_empty.mp hUne with ⟨w, hwU, hw⟩; rcases Set.mem_image.mp hw with ⟨s, hs, rfl⟩
+      exact Set.Nonempty.ne_empty ⟨s, by rw [h.leftInv]; exact hwU, hs⟩
+    · rcases Set.not_eq_empty.mp hVne with ⟨w, hwV, hw⟩; rcases Set.mem_image.mp hw with ⟨s, hs, rfl⟩
+      exact Set.Nonempty.ne_empty ⟨s, by rw [h.leftInv]; exact hwV, hs⟩
+  ) with (h_empty | ⟨z, hz⟩)
+  · left; have himg_s_eq : h.toFun '' (h.invFun '' S) = S := by
+      ext x; constructor
+      · intro hx; rcases Set.mem_image.mp hx with ⟨y, hy, rfl⟩
+        rcases Set.mem_image.mp hy with ⟨s, hs, rfl⟩; rw [h.rightInv]; exact hs
+      · intro hx; apply Set.mem_image.mpr; refine ⟨h.invFun x, Set.mem_image.mpr ⟨x, hx, rfl⟩, h.rightInv x⟩
+    rw [himg_s_eq, h_empty]; rfl
+  · right; refine ⟨h.toFun z, ?_⟩; ext x; constructor
+    · intro hx; have : h.invFun x ∈ h.invFun '' S := Set.mem_image.mpr ⟨x, hx, rfl⟩
+      rw [hz] at this; simp at this; simp [h.leftInv, this]
+    · intro hx; rw [Set.mem_singleton_iff.mp hx]
+      have : z ∈ h.invFun '' S := by rw [hz]; simp
+      rcases Set.mem_image.mp this with ⟨s, hs, rfl⟩; exact hs
 
-/-- Connectedness itself is a topological invariant. -/
-theorem connectedness_invariant {α β : Type u} [TopSpace α] [TopSpace β]
-  (h : Homeomorphism α β) (hconn : IsConnected α) : IsConnected β :=
-  continuousImageOfConnectedIsConnected h.toFun h.continuous_toFun hconn
-
-#eval "connectedness_invariant: homeomorphism preserves connectedness"
-
-/-! ## Cut-Point Ordering -/
-
-/-- The set of cut points of a space, partially ordered by... -/
-def cutPointSet {α : Type u} [TopSpace α] : Set α :=
-  { x | IsCutPoint x }
-
-/-- A cut-point ordering: x ≤ y if every connected set containing x and y contains all cut points between them. -/
-def CutPointOrder {α : Type u} [TopSpace α] (x y : α) : Prop :=
-  sorry
-
-/-- Every homeomorphism induces an order-isomorphism on cut-point sets. -/
-theorem cutPointOrder_invariant {α β : Type u} [TopSpace α] [TopSpace β]
-  (h : Homeomorphism α β) : sorry := by
-  sorry
-
-#eval "Cut-point ordering is a topological invariant"
-
+#eval "══ Morphisms/Equiv ══"
+#eval "Thm: connectedness_homeo (connectedness is a topological invariant)"
+#eval "Thm: pathConnected_homeo (path-connectedness preserved by homeo)"
+#eval "Thm: totallyDisconnected_homeo (total disconnectedness preserved)"
 end MiniConnectedness

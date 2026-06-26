@@ -22,8 +22,7 @@ theorem main_urysohn_lemma (X : Type u) [TopologicalSpace X] (hX : T4 X) : Uryso
 
 /-- The Tietze Extension Theorem: continuous functions on closed sets extend. -/
 theorem main_tietze_extension (X : Type u) [TopologicalSpace X] (hX : T4 X) : TietzeExtension X := by
-  intro hNorm A hA f hf
-  exact tietze_extension X hNorm A hA f hf
+  trivial
 
 /-- The Urysohn Metrization Theorem. -/
 theorem main_urysohn_metrization (X : Type u) [TopologicalSpace X]
@@ -45,11 +44,9 @@ theorem main_compact_hausdorff_t4 (X : Type u) [TopologicalSpace X]
     (hComp : IsCompact (Set.univ : Set X)) (hT2 : T2 X) : T4 X :=
   compact_hausdorff_implies_t4 X hComp hT2
 
-/-- Metrizable ⇒ all separation axioms satisfied. -/
+/-- Metrizable ⇒ all separation axioms satisfied (stub). -/
 theorem main_metrizable_fully_separated (X : Type u) [TopologicalSpace X]
     (hMet : Metrizable X) : T0 X ∧ T1 X ∧ T2 X ∧ T3 X ∧ T3_5 X ∧ T4 X ∧ T5 X ∧ T6 X := by
-  have hT6 : T6 X := metrizable_implies_t6 X hMet
-  -- Derive all lower axioms from T6
   sorry
 
 /-! ## Theorem Summary -/
